@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Client Database</title>
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </head>
+  <body>
+        <header>
+            <h3 id="title">Corporation Name / Clients</h3>
+            <container>
+                <button onclick="createTable()">Create Table</button>
+                <button onclick="removeTable()">Remove Table</button>
+                <button onclick="addCategory()">Add Category</button>
+                <button onclick="createRow()">Create Row</button>
+                <button onclick="removeRow()">Remove Row</button>
+            </container>
+        </header>
+        <container class="main-split">
+            <div class="menu">
+                <container class="menu-item">
+                    <ion-icon name="home-outline"></ion-icon>
+                    <h4>Databases</h4>
+                </container>
+                <container class="menu-item">
+                    <ion-icon name="bar-chart-outline"></ion-icon>
+                    <h4>Graphs</h4>
+                </container>
+                <container class="menu-item">
+                    <ion-icon name="settings-outline"></ion-icon>
+                    <h4>Settings</h4>
+                </container>
+            </div>
+            <div class="data-selection">
+                <input type="search">
+                <h4 onclick="changeTable('clients');">Clients</h4>
+                <h4 onclick="changeTable('inventory');">Inventory</h4>
+                <h4 onclick="changeTable('appointments');">Appointments</h4>
+            </div>
+            <containter class="table-container">
+                <table class="client-list" id="client-list">
+                </table>
+            </containter>
+        </container>
+        <div class="pop-up" id="pop-up"></div>
+    <script>
+        // Google AI Generated Function)
+        let tableName = "clients"
+        const container = document.getElementById('client-list');
+        const popUp = document.getElementById('pop-up');
+
+        async function fetchData() {
+            try {
+                tableName += ".json"
+                const response = await fetch(tableName);
+                const jsonData = await response.json();
+                displayData(jsonData);
+            } catch (error) {
+                console.error('Error fetching or parsing data:', error);
+            }
+        }
+
+        // Displaying the pulled data
+        function displayData(data) {
+            let htmlString = '';
+
+            if (tableName == "clients.json") {
+                htmlString += `<tr class="line-items">
+                                <th><input type="checkbox"></th>
+                                <th>id</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Date of Birth</th>
+                                <th>Address</th>
+                                <th>Booked</th>
+                            </tr>`;
+            } else if (tableName == "inventory.json") {
+                htmlString += `<tr class="line-items">
+                                <th>id</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Expiration</th>
+                                <th>Manufacturer</th>
+                                <th>Price Per Unit</th>
+                            </tr>`;
+            } else if (tableName == "appointments.json") {
+                htmlString += `<tr class="line-items">
+                                <th>Patient ID</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Employee</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Notes</th>
+                            </tr>`;
+            }
+
+            data.forEach(item => {
+                if (tableName == "clients.json") {
+                    htmlString += `<tr class="line-items">
+                                    <td><input type="checkbox"></td>
+                                    <td>${item.id}</td>
+                                    <td>${item.fname}</td>
+                                    <td>${item.lname}</td>
+                                    <td>${item.DOB}</td>
+                                    <td>${item.address}</td>
+                                    <td>${item.booked}</td>
+                                </tr>`;
+                } else if (tableName == "inventory.json") {
+                    htmlString += `<tr class="line-items">
+                                    <td>${item.id}</td>
+                                    <td>${item.name}</td>
+                                    <td>${item.category}</td>
+                                    <td>${item.quantity}</td>
+                                    <td>${item.expiration_date}</td>
+                                    <td>${item.manufacturer}</td>
+                                    <td>${item.price_per_unit}</td>
+                                </tr>`;
+                } else if (tableName == "appointments.json") {
+                    htmlString += `<tr class="line-items">
+                                    <td>${item.patient_id}</td>
+                                    <td>${item.date}</td>
+                                    <td>${item.time}</td>
+                                    <td>${item.type}</td>
+                                    <td>${item.provider}</td>
+                                    <td>${item.location}</td>
+                                    <td>${item.status}</td>
+                                    <td>${item.notes}</td>
+                                </tr>`;
+                }
+            });
+            container.innerHTML = htmlString;
+            checkForChanges();
+        }
+
+        fetchData();
+
+        function checkForChanges() {
+            if (tableName == "clients.json") {
+                if (container) {
+                    for (const row of container.rows) {
+                        if (row.cells[6].textContent == "Yes") {
+                            console.log(row.cells[6].textContent)
+                            row.cells[6].innerHTML = `<span class="dot1"></span>` + " " + row.cells[6].innerHTML;
+                        }
+                        else if (row.cells[6].textContent == "No") {
+                            console.log(row.cells[6].textContent)
+                            row.cells[6].innerHTML = `<span class="dot2"></span>` + " " + row.cells[6].innerHTML;
+                        }
+                    }
+                }
+            } else if (tableName == "appointments.json") {
+                if (container) {
+                    for (const row of container.rows) {
+                        if (row.cells[6].textContent == "Confirmed") {
+                            console.log(row.cells[6].textContent)
+                            row.cells[6].innerHTML = `<span class="dot1"></span>` + " " + row.cells[6].innerHTML;
+                        }
+                        else if (row.cells[6].textContent == "Pending") {
+                            console.log(row.cells[6].textContent)
+                            row.cells[6].innerHTML = `<span class="dot3"></span>` + " " + row.cells[6].innerHTML;
+                        } else if (row.cells[6].textContent == "Cancelled") {
+                            console.log(row.cells[6].textContent)
+                            row.cells[6].innerHTML = `<span class="dot2"></span>` + " " + row.cells[6].innerHTML;
+                        }
+                    }
+                }
+            }
+        }
+
+        function changeTable(string) {
+            let currString = document.getElementById('title').innerHTML
+            if (!currString.includes(string)) {
+                document.getElementById('title').innerHTML = "Corporation Name / " + string;
+                tableName = string;
+
+                fetchData();
+            }
+        }
+
+        function createTable() {
+            popUp.style.display = "block";
+
+            htmlString = `<h2 class="popUp-Name">Create New Table</h2>
+            <div class="questions">
+                <container>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name">
+                </container>
+                <container>
+                    <label for="file-upload">Upload:</label>
+                    <input type="file" id="file-upload" accept=".json">
+                </container>
+            </div>
+            <container style="display: flex; justify-content: center; gap: 5px;">
+                <button>Submit</button>
+                <button>Cancel</button>
+            </container>
+            <p style="text-align: center;">**Not required** : &emsp14; Uploading a file <br>will auto fill the table</p>`
+
+            popUp.innerHTML = htmlString
+        }
+
+        function removeTable() {
+            popUp.style.display = "block";
+        }
+
+        function addCategory() {
+            popUp.style.display = "block";        }
+
+        function createRow() {
+            popUp.style.display = "block";
+        }
+
+        function removeRow() {
+            popUp.style.display = "block";
+        }
+    </script>
+  </body>
+</html>

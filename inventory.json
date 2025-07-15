@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "Digital Thermometer",
+    "category": "Diagnostic Equipment",
+    "quantity": 30,
+    "unit": "units",
+    "expiration_date": null,
+    "manufacturer": "Omron Healthcare",
+    "price_per_unit": 14.99
+  },
+  {
+    "id": 2,
+    "name": "Syringe 5mL with Needle",
+    "category": "Medical Supply",
+    "quantity": 500,
+    "unit": "units",
+    "expiration_date": "2026-11-01",
+    "manufacturer": "BD",
+    "price_per_unit": 0.25
+  },
+  {
+    "id": 3,
+    "name": "Blood Pressure Cuff",
+    "category": "Diagnostic Equipment",
+    "quantity": 12,
+    "unit": "units",
+    "expiration_date": null,
+    "manufacturer": "Welch Allyn",
+    "price_per_unit": 45.00
+  },
+  {
+    "id": 4,
+    "name": "Alcohol Prep Pads",
+    "category": "Sanitation",
+    "quantity": 1200,
+    "unit": "pads",
+    "expiration_date": "2026-04-15",
+    "manufacturer": "Dynarex",
+    "price_per_unit": 0.02
+  },
+  {
+    "id": 5,
+    "name": "Tongue Depressors",
+    "category": "Examination Supply",
+    "quantity": 2000,
+    "unit": "sticks",
+    "expiration_date": null,
+    "manufacturer": "Medline",
+    "price_per_unit": 0.01
+  },
+  {
+    "id": 6,
+    "name": "Disposable Gloves - Medium",
+    "category": "PPE",
+    "quantity": 1000,
+    "unit": "gloves",
+    "expiration_date": "2027-01-01",
+    "manufacturer": "Cardinal Health",
+    "price_per_unit": 0.08
+  },
+  {
+    "id": 7,
+    "name": "Hand Sanitizer (500ml)",
+    "category": "Sanitation",
+    "quantity": 60,
+    "unit": "bottles",
+    "expiration_date": "2026-09-30",
+    "manufacturer": "Purell",
+    "price_per_unit": 3.50
+  },
+  {
+    "id": 8,
+    "name": "Cotton Balls",
+    "category": "Medical Supply",
+    "quantity": 500,
+    "unit": "balls",
+    "expiration_date": null,
+    "manufacturer": "Medline",
+    "price_per_unit": 0.005
+  },
+  {
+    "id": 9,
+    "name": "Stethoscope",
+    "category": "Diagnostic Equipment",
+    "quantity": 10,
+    "unit": "units",
+    "expiration_date": null,
+    "manufacturer": "Littmann",
+    "price_per_unit": 95.00
+  },
+  {
+    "id": 10,
+    "name": "Adhesive Bandages (Assorted Sizes)",
+    "category": "First Aid",
+    "quantity": 800,
+    "unit": "bandages",
+    "expiration_date": "2027-05-01",
+    "manufacturer": "Band-Aid",
+    "price_per_unit": 0.03
+  }
+]
