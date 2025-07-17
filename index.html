@@ -15,7 +15,8 @@
             <container>
                 <button onclick="createTable()">Create Table</button>
                 <button onclick="removeTable()">Remove Table</button>
-                <button onclick="addCategory()">Add Category</button>
+                <button onclick="addColumn()">Add Column</button>
+                <button onclick="removeColumn()">Remove Column</button>
                 <button onclick="createRow()">Create Row</button>
                 <button onclick="removeRow()">Remove Row</button>
             </container>
@@ -35,7 +36,7 @@
                     <h4>Settings</h4>
                 </container>
             </div>
-            <div class="data-selection">
+            <div class="data-selection" id="data-selection">
                 <input type="search">
                 <h4 onclick="changeTable('clients');">Clients</h4>
                 <h4 onclick="changeTable('inventory');">Inventory</h4>
@@ -69,7 +70,7 @@
             let htmlString = '';
 
             if (tableName == "clients.json") {
-                htmlString += `<tr class="line-items">
+                htmlString += `<tr class="line-items-f">
                                 <th><input type="checkbox"></th>
                                 <th>id</th>
                                 <th>First Name</th>
@@ -146,11 +147,9 @@
                 if (container) {
                     for (const row of container.rows) {
                         if (row.cells[6].textContent == "Yes") {
-                            console.log(row.cells[6].textContent)
                             row.cells[6].innerHTML = `<span class="dot1"></span>` + " " + row.cells[6].innerHTML;
                         }
                         else if (row.cells[6].textContent == "No") {
-                            console.log(row.cells[6].textContent)
                             row.cells[6].innerHTML = `<span class="dot2"></span>` + " " + row.cells[6].innerHTML;
                         }
                     }
@@ -159,14 +158,11 @@
                 if (container) {
                     for (const row of container.rows) {
                         if (row.cells[6].textContent == "Confirmed") {
-                            console.log(row.cells[6].textContent)
                             row.cells[6].innerHTML = `<span class="dot1"></span>` + " " + row.cells[6].innerHTML;
                         }
                         else if (row.cells[6].textContent == "Pending") {
-                            console.log(row.cells[6].textContent)
                             row.cells[6].innerHTML = `<span class="dot3"></span>` + " " + row.cells[6].innerHTML;
                         } else if (row.cells[6].textContent == "Cancelled") {
-                            console.log(row.cells[6].textContent)
                             row.cells[6].innerHTML = `<span class="dot2"></span>` + " " + row.cells[6].innerHTML;
                         }
                     }
@@ -183,7 +179,6 @@
                 fetchData();
             }
         }
-
         function createTable() {
             popUp.style.display = "block";
 
@@ -199,20 +194,79 @@
                 </container>
             </div>
             <container style="display: flex; justify-content: center; gap: 5px;">
-                <button>Submit</button>
-                <button>Cancel</button>
+                <button id="submit-button">Submit</button>
+                <button id="cancel-button">Cancel</button>
             </container>
             <p style="text-align: center;">**Not required** : &emsp14; Uploading a file <br>will auto fill the table</p>`
 
             popUp.innerHTML = htmlString
+
+            // NOT DONE
+            document.getElementById('submit-button').addEventListener('click', () => {
+                const fs = require('fs');
+                let name = document.getElementById('name').value + ".json";
+                fs.writeFile(name, {}, (err) => {
+                    if (err) {
+                        console.error('Error writing file:', err);
+                        return;
+                    }
+                });
+            });
+
         }
 
         function removeTable() {
             popUp.style.display = "block";
+
+            let tables = document.getElementById('data-selection');
+
+            htmlString = `<h2>Remove Table</h2>`
+
+            for (const child of tables.children) {
+                if (child.innerHTML != "" && child.style.display != "none") {
+                    let string = child.innerHTML
+                    htmlString += `<container class="delete-table-container" id="${string}">
+                                    <ion-icon name="trash-outline" onclick="deleteTable('${string}');" cursor="pointer">f</ion-icon>
+                                    <h4>${child.innerHTML}</h4>
+                                </container>`
+                }
+            }
+            popUp.style.display = "block";
+            popUp.innerHTML = htmlString
         }
 
-        function addCategory() {
-            popUp.style.display = "block";        }
+        function addColumn() {
+            popUp.style.display = "block";
+
+            htmlString = `<h2>Add Column</h2>
+            <label for='column-name'>Name</label>
+            <input id='column-name' type="search">
+            <button id="submit-button">Submit</button><button>Cancel</button>`
+
+            popUp.innerHTML = htmlString;
+
+            document.getElementById('submit-button').addEventListener('click', () => {
+                console.log(tableName)
+                var fs = require('fs');
+                fs.readFile(tableName, 'utf8', (err, data) => {
+                   if (err) {
+                        console.error('Error reading file:', err);
+                        return;
+                    }
+                    console.log('File content:', data);
+                });
+                // let addToTable = `<th>${document.getElementById('column-name').value}</th>`;
+                // for (const child in container.children) {
+                //     console.log(child)
+                // }
+                // container.innerHTML += addToTable;
+            });
+
+        }
+
+        function removeColumn() {
+            popUp.style.display = "block";
+        }
 
         function createRow() {
             popUp.style.display = "block";
@@ -220,6 +274,56 @@
 
         function removeRow() {
             popUp.style.display = "block";
+        }
+
+        function deleteTable(name) {
+            let currHTML = document.getElementById('pop-up').innerHTML;
+            document.getElementById('pop-up').innerHTML = `<h2>Are you sure?</h2>
+            <container class="delete-table-container">
+                <p>Please type '${name}' to confirm</p>
+                <input type="search" id="confirmation">
+                <button id="confirm-button">Submit</button>
+            </container>`
+
+            document.getElementById('confirm-button').addEventListener('click', () => {
+                confirmDelete(name, currHTML);
+            });
+        }
+
+        function confirmDelete(name, html) {
+            if (document.getElementById('confirmation').value == name) {
+                let tables = document.getElementById('data-selection');
+
+                for (const child of tables.children) {
+                    if (child.innerHTML == name) {
+                        child.style.display = "none";
+                    }
+                }
+
+                document.getElementById('pop-up').innerHTML = html;
+
+                let tables2 = document.getElementById('pop-up');
+
+                for (const child of tables2.children) {
+                    if (child.id == name) {
+                        child.style.display = "none";
+                    }
+                }
+
+                if (tableName.replace('.json',"") == name.toLowerCase()) {
+                    let count = 0;
+                    for (const child of tables.children) {
+                        if (child.innerHTML != name && count != 0) {
+                            tableName = (child.innerHTML).toLowerCase();
+                            fetchData();
+                            break
+                        }
+                        count++;
+                    }
+                }
+
+                document.getElementById('pop-up').style.display = "none";
+            }
         }
     </script>
   </body>

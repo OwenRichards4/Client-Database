@@ -242,3 +242,17 @@ ion-icon {
     left: 20px;
     margin-bottom: 20px;
 }
+
+.delete-table-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.delete-table-container ion-icon {
+    cursor: pointer;
+}
+
+.delete-table-container ion-icon:hover {
+    color: red;
+}
