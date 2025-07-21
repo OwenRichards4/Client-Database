@@ -6,7 +6,7 @@
     "time": "10:00 AM",
     "type": "General Checkup",
     "provider": "Dr. Angela Moore",
-    "location": "Exam Room 1",
+    "where": "Exam Room 1",
     "status": "Confirmed",
     "notes": ""
   },
@@ -17,7 +17,7 @@
     "time": "2:30 PM",
     "type": "Follow-Up (Blood Pressure)",
     "provider": "Dr. Angela Moore",
-    "location": "Exam Room 2",
+    "where": "Exam Room 2",
     "status": "Confirmed",
     "notes": "Patient on new medication"
   },
@@ -28,7 +28,7 @@
     "time": "9:15 AM",
     "type": "Flu Vaccine",
     "provider": "Nurse Riley Grant",
-    "location": "Nurse Station A",
+    "where": "Nurse Station A",
     "status": "Confirmed",
     "notes": ""
   },
@@ -39,7 +39,7 @@
     "time": "1:00 PM",
     "type": "Physical Exam",
     "provider": "Dr. Angela Moore",
-    "location": "Exam Room 1",
+    "where": "Exam Room 1",
     "status": "Cancelled",
     "notes": "Patient called to reschedule"
   },
@@ -50,7 +50,7 @@
     "time": "11:45 AM",
     "type": "Cholesterol Screening",
     "provider": "Dr. Kelvin Ross",
-    "location": "Lab 1",
+    "where": "Lab 1",
     "status": "Confirmed",
     "notes": "Fasting required"
   },
@@ -61,7 +61,7 @@
     "time": "3:15 PM",
     "type": "Sick Visit (Cough/Fever)",
     "provider": "Dr. Angela Moore",
-    "location": "Exam Room 3",
+    "where": "Exam Room 3",
     "status": "Pending",
     "notes": ""
   },
@@ -72,7 +72,7 @@
     "time": "8:30 AM",
     "type": "Wellness Visit",
     "provider": "Dr. Kelvin Ross",
-    "location": "Exam Room 2",
+    "where": "Exam Room 2",
     "status": "Confirmed",
     "notes": "First visit with this provider"
   },
@@ -83,7 +83,7 @@
     "time": "4:00 PM",
     "type": "Prenatal Checkup",
     "provider": "Dr. Angela Moore",
-    "location": "Exam Room 1",
+    "where": "Exam Room 1",
     "status": "Confirmed",
     "notes": "Patient is 24 weeks along"
   },
@@ -94,7 +94,7 @@
     "time": "10:45 AM",
     "type": "Annual Physical",
     "provider": "Dr. Kelvin Ross",
-    "location": "Exam Room 3",
+    "where": "Exam Room 3",
     "status": "Confirmed",
     "notes": ""
   },
@@ -105,7 +105,7 @@
     "time": "9:00 AM",
     "type": "Allergy Follow-Up",
     "provider": "Dr. Angela Moore",
-    "location": "Exam Room 2",
+    "where": "Exam Room 2",
     "status": "Pending",
     "notes": "Evaluate seasonal allergy meds"
   }

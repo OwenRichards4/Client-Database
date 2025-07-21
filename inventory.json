@@ -27,7 +27,7 @@
     "unit": "units",
     "expiration_date": null,
     "manufacturer": "Welch Allyn",
-    "price_per_unit": 45.00
+    "price_per_unit": 45
   },
   {
     "id": 4,
@@ -67,7 +67,7 @@
     "unit": "bottles",
     "expiration_date": "2026-09-30",
     "manufacturer": "Purell",
-    "price_per_unit": 3.50
+    "price_per_unit": 3.5
   },
   {
     "id": 8,
@@ -87,7 +87,7 @@
     "unit": "units",
     "expiration_date": null,
     "manufacturer": "Littmann",
-    "price_per_unit": 95.00
+    "price_per_unit": 95
   },
   {
     "id": 10,

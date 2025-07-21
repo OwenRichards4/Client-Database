@@ -1,0 +1,143 @@
+{
+  "clients": [
+    {
+      "visible": true,
+      "name": "id",
+      "value": "id"
+    },
+    {
+      "visible": true,
+      "name": "First Name",
+      "value": "fname"
+    },
+    {
+      "visible": true,
+      "name": "Last Name",
+      "value": "lname"
+    },
+    {
+      "visible": true,
+      "name": "Date of Birth",
+      "value": "DOB"
+    },
+    {
+      "visible": true,
+      "name": "Address",
+      "value": "address"
+    },
+    {
+      "visible": false,
+      "name": "City",
+      "value": "city"
+    },
+    {
+      "visible": false,
+      "name": "State",
+      "value": "state"
+    },
+    {
+      "visible": false,
+      "name": "Zip",
+      "value": "zip"
+    },
+    {
+      "visible": false,
+      "name": "Additional Info",
+      "value": "addInfo"
+    },
+    {
+      "visible": true,
+      "name": "Booked",
+      "value": "booked"
+    }
+  ],
+  "inventory": [
+    {
+      "visible": true,
+      "name": "id",
+      "value": "id"
+    },
+    {
+      "visible": true,
+      "name": "Name",
+      "value": "name"
+    },
+    {
+      "visible": true,
+      "name": "Category",
+      "value": "category"
+    },
+    {
+      "visible": true,
+      "name": "Quantity",
+      "value": "quantity"
+    },
+    {
+      "visible": false,
+      "name": "Units",
+      "value": "unit"
+    },
+    {
+      "visible": true,
+      "name": "Expiration",
+      "value": "expiration_date"
+    },
+    {
+      "visible": true,
+      "name": "Manufacturer",
+      "value": "manufacturer"
+    },
+    {
+      "visible": true,
+      "name": "Price Per Unit",
+      "value": "price_per_unit"
+    }
+  ],
+  "appointments": [
+    {
+      "visible": false,
+      "name": "id",
+      "value": "id"
+    },
+    {
+      "visible": true,
+      "name": "Patient id",
+      "value": "patient_id"
+    },
+    {
+      "visible": true,
+      "name": "Date",
+      "value": "date"
+    },
+    {
+      "visible": true,
+      "name": "Time",
+      "value": "time"
+    },
+    {
+      "visible": true,
+      "name": "Type",
+      "value": "type"
+    },
+    {
+      "visible": true,
+      "name": "Employee",
+      "value": "provider"
+    },
+    {
+      "visible": true,
+      "name": "Location",
+      "value": "where"
+    },
+    {
+      "visible": true,
+      "name": "Status",
+      "value": "status"
+    },
+    {
+      "visible": true,
+      "name": "Notes",
+      "value": "notes"
+    }
+  ]
+}
