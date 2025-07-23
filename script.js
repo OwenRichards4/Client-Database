@@ -7,23 +7,28 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname))); // Serve index.html
 
 app.post('/submit', (req, res) => {
-    const filename = 'test.json';
+    const { name, data } = req.body;
 
-    const userData = req.body;
-    const jsonFilePath = path.join(__dirname, filename);
+    if (!name || typeof name !== 'string') {
+        return res.status(400).send('Invalid filename');
+    }
 
-    fs.writeFile(jsonFilePath, JSON.stringify(userData, null, 2), (err) => {
+    console.log(name);
+
+    const jsonFilePath = path.join(__dirname, 'data', `${name}`);
+
+    fs.writeFile(jsonFilePath, JSON.stringify(data, null, 2), (err) => {
         if (err) {
             console.error('Error writing file', err);
             return res.status(500).send('Failed to save data');
         }
-        res.send('Data saved to user_data.json');
+        res.send(`Data saved to data/${name}`);
     });
 });
 
 app.post('/add-column', (req, res) => {
   const { tableName, columnName, defaultValue } = req.body;
-  const filePath = path.join(__dirname, `${tableName}.json`);
+  const filePath = path.join(__dirname, 'data', `${tableName}.json`);
 
   // Read the current JSON file
   fs.readFile(filePath, 'utf8', (err, data) => {
@@ -59,7 +64,7 @@ app.post('/add-column', (req, res) => {
 
 app.post('/add-row', (req, res) => {
   const { tableName, newRow } = req.body;
-  const filePath = path.join(__dirname, `${tableName}.json`);
+  const filePath = path.join(__dirname, 'data', `${tableName}.json`);
 
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
@@ -94,7 +99,7 @@ app.post('/add-row', (req, res) => {
 
 app.delete('/delete-table', (req, res) => {
   const { tableName } = req.body; // Expecting JSON body with "tableName"
-  const filePath = path.join(__dirname, `${tableName}.json`);
+  const filePath = path.join(__dirname, 'data', `${tableName}.json`);
 
   fs.unlink(filePath, (err) => {
     if (err) {
@@ -111,6 +116,22 @@ app.post('/update-ths', (req, res) => {
 
     fs.writeFileSync(thsPath, JSON.stringify(newThs, null, 2), 'utf-8');
     res.send('ths.json updated successfully');
+});
+
+app.post('/delete-row', (req, res) => {
+    const { tableName, id } = req.body;
+    const filePath = path.join(__dirname, 'data', `${tableName}.json`);
+
+    if (!fs.existsSync(filePath)) {
+        return res.status(404).send('Table not found');
+    }
+
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    const filtered = data.filter(row => row.id !== id);
+
+    fs.writeFileSync(filePath, JSON.stringify(filtered, null, 2), 'utf-8');
+
+    res.send(`Row with id ${id} deleted from ${tableName}.json`);
 });
 
 const PORT = 3000;

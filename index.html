@@ -38,9 +38,9 @@
             </div>
             <div class="data-selection" id="data-selection">
                 <input type="search">
-                <h4 onclick="changeTable('clients');">Clients</h4>
-                <h4 onclick="changeTable('inventory');">Inventory</h4>
-                <h4 onclick="changeTable('appointments');">Appointments</h4>
+                <h4 onclick="changeTable('clients')">Clients</h4>
+                <h4 onclick="changeTable('inventory')">Inventory</h4>
+                <h4 onclick="changeTable('appointments')">Appointments</h4>
             </div>
             <containter class="table-container">
                 <table class="client-list" id="client-list">
@@ -53,185 +53,47 @@
         let tableName = "clients";
         const container = document.getElementById('client-list');
         const popUp = document.getElementById('pop-up');
-        let ths, currHeaders = [];
+        let ths, currHeaders = [], files = [];
 
         async function refreshTHS() {
             try {
                 const response2 = await fetch("ths.json");
                 const jsonData2 = await response2.json();
                 ths = jsonData2
+                for (i in ths) {files.push(i)};
             } catch (error) {
-                console.log('ths error');
+                console.log('ths error', ths);
             }
         }
         refreshTHS();
 
-//         let ths = {
-//     "clients": [
-//         {
-//             "visible": true,
-//             "name": "id",
-//             "value": "id"
-//         },
-//         {
-//             "visible": true,
-//             "name": "First Name",
-//             "value": "fname"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Last Name",
-//             "value": "lname"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Date of Birth",
-//             "value": "DOB"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Address",
-//             "value": "address"
-//         },
-//         {
-//             "visible": false,
-//             "name": "City",
-//             "value": "city"
-//         },
-//         {
-//             "visible": false,
-//             "name": "State",
-//             "value": "state"
-//         },
-//         {
-//             "visible": false,
-//             "name": "Zip",
-//             "value": "zip"
-//         },
-//         {
-//             "visible": false,
-//             "name": "Additional Info",
-//             "value": "addInfo"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Booked",
-//             "value": "booked"
-//         } // ,
-//         // {
-//         //     "visible": true,
-//         //     "name": "test",
-//         //     "value": "test"
-//         // }
-//     ],
-//     "inventory": [
-//         {
-//             "visible": true,
-//             "name": "id",
-//             "value": "id"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Name",
-//             "value": "name"
-//         },
-//         {
-//             "visible": true,
-//             "name":"Category",
-//             "value": "category"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Quantity",
-//             "value": "quantity"
-            
-//         },
-//         {
-//             "visible": false,
-//             "name": "Units",
-//             "value": "unit"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Expiration",
-//             "value": "expiration_date"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Manufacturer",
-//             "value": "manufacturer"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Price Per Unit",
-//             "value": "price_per_unit"
-//         }
-//     ],
-//     "appointments": [
-//         {
-//             "visible": false,
-//             "name": "id",
-//             "value": "id"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Patient id",
-//             "value": "patient_id"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Date",
-//             "value": "date"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Time",
-//             "value": "time"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Type",
-//             "value": "type"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Employee",
-//             "value": "provider"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Location",
-//             "value": "where"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Status",
-//             "value": "status"
-//         },
-//         {
-//             "visible": true,
-//             "name": "Notes",
-//             "value": "notes"
-//         }
-//     ]
-// }
-
         async function fetchData() {
+            let endpoint = '/data/' + tableName;
             try {
-                if (!tableName.endsWith(".json")) {
-                    tableName += ".json"
+                if (!endpoint.endsWith(".json")) {
+                    endpoint += ".json"
                 }
-                const response = await fetch(tableName);
+                const response = await fetch(endpoint);
                 const jsonData = await response.json();
                 displayData(jsonData);
             } catch (error) {
-                console.log('json error');
+                console.log('json error', endpoint);
             }
         }
+            
+        function fillDataSelection() {
+            console.log(ths, files)
+            // for (i in arr.length) {
+            //     console.log("test");
+                
+            //     document.getElementById('data-selection').innerHTML += `<h4 onclick="changeTable(${i})">${i}</h4>`;
+            // }
+        }
+        fillDataSelection();
 
         // Displaying the pulled data
         function displayData(data) {
-            let htmlString = '<tr class="line-items-f"><th><input type="checkbox"></th>';
+            let htmlString = '<tr class="line-items-f"><th><input type="checkbox" id="f-checkbox" onchange="toggleAllCheckboxes(checked)"></th>';
 
             fillHeaders();
 
@@ -242,7 +104,7 @@
             let count = 1;
 
             data.forEach(item => {   
-                htmlString +=  `<tr class="line-items"><td><input id="table-checkbox" type="checkbox" onchange="checkboxToggled(checked, ${count})"></td>`;
+                htmlString +=  `<tr class="line-items"><td><input id="table-checkbox-${count}" type="checkbox" onchange="checkboxToggled(${count})"></td>`;
                 for (i in item) {
                     for (j in ths[tableName.replace(".json", "")]) {
                         if (i == ths[tableName.replace(".json", "")][j].value && ths[tableName.replace(".json", "")][j].visible == true) {
@@ -258,7 +120,6 @@
             container.innerHTML = htmlString;
             checkForChanges();
         }
-
         fetchData();
 
         function checkForChanges() {
@@ -336,14 +197,18 @@
 
             popUp.innerHTML = htmlString
 
+            let name = document.getElementById('name').value;
+
             document.getElementById('submit-button').addEventListener('click', () => {
+                let filename = document.getElementById('name').value;
                 const response = fetch('/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: [JSON.stringify([])]
+                    body: JSON.stringify({
+                        name: `${filename}.json`,
+                        data: [{}]
+                    })
                 });
-
-                let name = document.getElementById('name').value;
 
                 let ele = document.createElement('h4');
                 ele.innerHTML = name;
@@ -353,6 +218,8 @@
                 document.getElementById('data-selection').append(ele);
 
                 popUp.style.display = "none";
+
+                location.reload();
             });
 
             document.getElementById('cancel-button').addEventListener('click', () => {
@@ -418,9 +285,9 @@
 
                 currHeaders.push(document.getElementById('column-name').value);
 
-                fetchData();
-
                 popUp.style.display = "none";
+
+                location.reload();
             });
 
             document.getElementById('cancel-button').addEventListener('click', () => {
@@ -490,7 +357,25 @@
         }
 
         function removeRow() {
-            popUp.style.display = "block";
+            for (const row of container.rows) {
+                if (row.cells[0].style.backgroundColor == "lightblue") {
+                    for (i in ths[tableName.replace('.json', "")]) {
+                        if (i == row.cells[1].textContent) {
+                            let newName = tableName.replace(".json","");
+                            fetch('/delete-row', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ newName, i })
+                            })
+                            .then(res => res.text())
+                            .then(() => {
+                                fetchData();
+                            });
+                        }
+                    }
+                    row.style.display = "none";
+                }
+            }
         }
 
         function deleteTable(name) {
@@ -555,8 +440,43 @@
             }
         }
 
-        function checkboxToggled(value, num) {
-            console.log(value, num)
+        function checkboxToggled(num) {
+            for (const row of container.rows) {
+                if (row.cells[0].innerHTML.includes("table-checkbox-" + num)) {
+                    for (const col of row.cells) {
+                        if (col.style.backgroundColor != "lightblue") {
+                            col.style.backgroundColor = "lightblue";
+                        } else {
+                            col.style.backgroundColor = "white";
+                        }
+                    }
+                    break
+                }
+            }
+        }
+
+        function toggleAllCheckboxes(toggle) {
+            let total = container.rows.length;
+            let check = false;
+            for (i = 1; i < total; i++) {
+                if (!document.getElementById('table-checkbox-' + i).checked) {
+                    check = true;
+                }
+            }
+            if (check) {
+                for (i = 1; i < total; i++) {
+                    if (!document.getElementById('table-checkbox-' + i).checked) {
+                        checkboxToggled(i);
+                        document.getElementById('table-checkbox-' + i).checked = true;
+                    }
+                }
+            } else {
+                for (i = 1; i < total; i++) {
+                    checkboxToggled(i);
+                    document.getElementById('table-checkbox-' + i).checked = false;
+                }
+                document.getElementById('f-checkbox').checked = false;
+            }
         }
     </script>
   </body>
