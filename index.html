@@ -13,34 +13,34 @@
         <header>
             <h3 id="title">Corporation Name / clients</h3>
             <container>
-                <button onclick="createTable()">Create Table</button>
-                <button onclick="removeTable()">Remove Table</button>
-                <button onclick="addColumn()">Create Column</button>
-                <button onclick="removeColumn()">Remove Column</button>
-                <button onclick="createRow()">Create Row</button>
-                <button onclick="removeRow()">Remove Row</button>
+                <button onclick="createTable()" id="createTable">Create Table</button>
+                <button onclick="removeTable()" id="removeTable">Remove Table</button>
+                <button onclick="addColumn()" id="createCol">Create Column</button>
+                <button onclick="removeColumn()"  id="removeCol">Remove Column</button>
+                <button onclick="createRow()"  id="createRow">Create Row</button>
+                <button onclick="removeRow()" id="removeRow">Remove Row</button>
             </container>
         </header>
         <container class="main-split">
             <div class="menu">
-                <container class="menu-item">
+                <container class="menu-item" onclick='windowChange("index.html")'>
                     <ion-icon name="home-outline"></ion-icon>
                     <h4>Databases</h4>
                 </container>
-                <container class="menu-item">
+                <container class="menu-item" onclick='alertFunc("Graphs is not currently setup")'>
                     <ion-icon name="bar-chart-outline"></ion-icon>
                     <h4>Graphs</h4>
                 </container>
-                <container class="menu-item">
+                <container class="menu-item" onclick='windowChange("settings.html")'>
                     <ion-icon name="settings-outline"></ion-icon>
                     <h4>Settings</h4>
                 </container>
             </div>
             <div class="data-selection" id="data-selection">
-                <input type="search">
-                <h4 onclick="changeTable('clients')">Clients</h4>
-                <h4 onclick="changeTable('inventory')">Inventory</h4>
-                <h4 onclick="changeTable('appointments')">Appointments</h4>
+                <input type="search" type="text" id="table-search">
+                <h4 id="clients" onclick="changeTable('clients')" class="active-profile">Clients</h4>
+                <h4 id="inventory" onclick="changeTable('inventory')">Inventory</h4>
+                <h4 id="appointments" onclick="changeTable('appointments')">Appointments</h4>
             </div>
             <containter class="table-container">
                 <table class="client-list" id="client-list">
@@ -54,6 +54,10 @@
         const container = document.getElementById('client-list');
         const popUp = document.getElementById('pop-up');
         let ths, currHeaders = [], files = [];
+
+        if (localStorage.getItem('active') == null) {
+            localStorage.setItem('active', "admin")
+        }
 
         async function refreshTHS() {
             try {
@@ -80,9 +84,37 @@
                 console.log('json error', endpoint);
             }
         }
+
+        function changeMode() {
+            if (localStorage.getItem('active') == "admin") {
+                document.getElementById('createTable').hidden = false
+                document.getElementById('removeTable').hidden = false
+                document.getElementById('createCol').hidden = false
+                document.getElementById('removeCol').hidden = false
+                document.getElementById('createRow').hidden = false
+                document.getElementById('removeRow').hidden = false
+            }
+            else if (localStorage.getItem('active') == "employee") {
+                document.getElementById('createTable').hidden = true
+                document.getElementById('removeTable').hidden = true
+                document.getElementById('createCol').hidden = false
+                document.getElementById('removeCol').hidden = false
+                document.getElementById('createRow').hidden = false
+                document.getElementById('removeRow').hidden = false
+            }
+            else {
+                document.getElementById('createTable').hidden = true
+                document.getElementById('removeTable').hidden = true
+                document.getElementById('createCol').hidden = true
+                document.getElementById('removeCol').hidden = true
+                document.getElementById('createRow').hidden = true
+                document.getElementById('removeRow').hidden = true
+            }
+        }
+        changeMode()
             
         function fillDataSelection() {
-            console.log(ths, files)
+            //console.log(ths, files)
             // for (i in arr.length) {
             //     console.log("test");
                 
@@ -167,6 +199,13 @@
 
         function changeTable(string) {
             let currString = document.getElementById('title').innerHTML
+            
+            // Color changes
+            var temp = document.getElementById(tableName);
+            temp.classList.remove('active-profile');
+
+            document.getElementById(string).className = 'active-profile'
+
             if (!currString.includes(string)) {
                 document.getElementById('title').innerHTML = "Corporation Name / " + string;
                 tableName = string;
@@ -477,6 +516,35 @@
                 }
                 document.getElementById('f-checkbox').checked = false;
             }
+        }
+
+        document.getElementById('table-search').addEventListener('input', function(){
+            tableSearch()
+        });
+
+        function tableSearch() {
+            if (document.getElementById('table-search').value != "") {
+                for (i in files) {
+                    if (!files[i].includes(document.getElementById('table-search').value)) {
+                        document.getElementById(files[i]).hidden = true
+                    }
+                }
+            } 
+            else {
+                const dataSelection = document.getElementById('data-selection');
+                for (let i = 0; i < dataSelection.childElementCount - 1; i++) {
+                    document.getElementById('data-selection').children[i + 1].hidden = false
+                }
+            }
+        }
+        
+        // Navigation
+        function alertFunc(message) {
+            alert(message)
+        }
+
+        function windowChange(location) {
+            window.location.href = location
         }
     </script>
   </body>

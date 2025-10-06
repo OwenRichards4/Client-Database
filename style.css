@@ -69,6 +69,10 @@ main {
 
 .menu-item h4 {
     margin: 0;
+
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .data-selection {
@@ -255,4 +259,8 @@ ion-icon {
 
 .delete-table-container ion-icon:hover {
     color: red;
+}
+
+.active-profile {
+    color: var(--blue1)
 }

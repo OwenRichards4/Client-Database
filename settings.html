@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Client Database</title>
+        <link rel="stylesheet" href="./style.css">
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    </head>
+    <body>
+        <header>
+            <h3 id="title">Change Account Type</h3>
+        </header>
+        <container class="main-split">
+            <div class="menu">
+                <container class="menu-item" onclick='windowChange("index.html")'>
+                    <ion-icon name="home-outline"></ion-icon>
+                    <h4>Databases</h4>
+                </container>
+                <container class="menu-item" onclick='alertFunc("Graphs is not currently setup")'>
+                    <ion-icon name="bar-chart-outline"></ion-icon>
+                    <h4>Graphs</h4>
+                </container>
+                <container class="menu-item" onclick='windowChange("settings.html")'>
+                    <ion-icon name="settings-outline"></ion-icon>
+                    <h4>Settings</h4>
+                </container>
+            </div>
+            <div class="data-selection" id="data-selection">
+                <h4 id="admin" onclick="changeMode('admin')">Administration</h4>
+                <h4 id="employee" onclick="changeMode('employee')">Employee</h4>
+                <h4 id="customer" onclick="changeMode('customer')">Customer</h4>
+            </div>
+            <containter class="table-container">
+                <table class="client-list" id="client-list">
+                </table>
+            </containter>
+        </container>
+        <div class="pop-up" id="pop-up"></div>
+    <script>
+        document.getElementById(localStorage.getItem('active')).className = "active-profile"
+
+        // Navigation
+        function alertFunc(message) {
+            alert(message)
+        }
+
+        function windowChange(location) {
+            window.location.href = location
+        }
+
+        function changeMode(type) {
+            var name_of_class = 'active-profile'
+            if (localStorage.getItem('active') != type) {
+                var temp = document.getElementById(localStorage.getItem('active'));
+                temp.classList.remove(name_of_class);
+
+                document.getElementById(type).className = name_of_class
+                localStorage.setItem('active', String(type))
+                console.log(localStorage.getItem('active'))
+            }
+        }
+    </script>
+    </body>
+</html>
